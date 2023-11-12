@@ -1,9 +1,10 @@
+//Código mío
 package icc.clases;
 
-import icc.colors.Colors;
 import java.util.Scanner;
+import icc.colors.Colors;
 import icc.clases.Simulacion;
-
+import icc.clases.Calendario;
 
 public class Modelo{
 

@@ -1,9 +1,11 @@
+//Código mio
 package icc.clases;
 
 import java.util.ArrayList;
+import java.util.Random;
 import icc.colors.Colors;
 import icc.clases.Modelo;
-
+import icc.clases.Calendario;
 
 public class Simulacion{
 
@@ -46,64 +48,24 @@ public class Simulacion{
         }
     }
 
+//Método para generación de puntuaciones pseudoaleatorias
 
+        private static final int PUNTOS_MAXIMOS = 25; // Puntuación máxima 
+        private static final int RONDAS_MAX = 5;
+public static int[] generarPuntuacionesSets() {
+        Random random = new Random();
+        int[] puntuacionesSets = new int[5]; // Considerando un partido a 5 sets máximo
 
-
-//Método para continuar simulación (isaac)
-
-
-
-
-//Método para calendarización
-
-        
-
-    //<>: restringir entradas/parámetros al método
-    public ArrayList<int[][]> Calendario (int numEquipos) {
-        ArrayList<int[][]> calendario = new ArrayList<>();
-
-        //Lista con los ID's o bueno identificadores de los equipos
-        int[] equipos = new int[numEquipos];
-        for (int i = 0; i < numEquipos; i++) {
-            equipos[i] = i;
-        }
-
-        // Si el número de equipos es impar se crea un equipo falso para q fuera par
-        if (numEquipos % 2 != 0) {
-            equipos = agregarEquipoFicticio(equipos);
-            numEquipos++;
-        }
-
-
-        int numRondas = numEquipos - 1;
-        int numPartidosPorRonda = numEquipos / 2;
-
-        for (int ronda = 0; ronda < numRondas; ronda++) {
-            int[][] enfrentamientos = new int[numPartidosPorRonda][2];
-
-            for (int partido = 0; partido < numPartidosPorRonda; partido++) {
-                int equipoLocal = equipos[(ronda + partido) % numEquipos];
-                int equipoVisitante = equipos[(ronda + numEquipos - partido) % numEquipos];
-
-                // Ignorar el equipo falso
-                if (equipoLocal != -1 && equipoVisitante != -1) {
-                    enfrentamientos[partido][0] = equipoLocal;
-                    enfrentamientos[partido][1] = equipoVisitante;
-                }
+        for (int i = 0; i < puntuacionesSets.length; i++) {
+            if (i == 4) {
+                // Quinto set (si es necesario)
+                puntuacionesSets[i] = random.nextInt(PUNTOS_MAXIMOS - 14) + 15; // Entre 15 y PUNTOS_MAXIMOS
+            } else {
+                puntuacionesSets[i] = random.nextInt(PUNTOS_MAXIMOS + 1); // Entre 0 y PUNTOS_MAXIMOS
             }
-
-            // Agregar el enfrentamiento a la lista de calendario
-            calendario.add(enfrentamientos);
         }
 
-        return calendario; 
+        return puntuacionesSets;
     }
 
-    // Método q agrega un equipo ficticio si el número de equipos es impar
-    private int[] agregarEquipoFicticio(int[] equipos) {
-        int[] equiposConFicticio = new int[equipos.length + 1];
-        System.arraycopy(equipos, 0, equiposConFicticio, 0, equipos.length);
-        equiposConFicticio[equipos.length] = -1;
-        return equiposConFicticio;
-    }
 }
